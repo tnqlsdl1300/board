@@ -1,6 +1,7 @@
+//file:noinspection JCenterRepository
 buildscript {
     ext {
-        springBootVersion = '2.1.7.RELEASE' // 2.1.7, 2.1.8, 2.1.9 다 괜찮습니다.
+        springBootVersion = '2.1.9.RELEASE'
     }
     repositories {
         mavenCentral()
