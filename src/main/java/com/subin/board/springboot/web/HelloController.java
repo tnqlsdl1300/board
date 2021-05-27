@@ -1,6 +1,8 @@
 package com.subin.board.springboot.web;
 
+import com.subin.board.springboot.web.dto.HelloResponseDto;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /*
@@ -15,5 +17,16 @@ public class HelloController {
     @GetMapping("/hello")
     public String Hello(){
         return "hello";
+    }
+
+    /*
+    @RequestParam() 이란?
+        - 외부에서 API로 넘긴 파라미터를 가져오는 어노테이션
+        - [@RequestParam("name")] 이라는 이름으로 넘긴 값을 [String name] 에 넣어준다
+     */
+    @GetMapping("/hello/dto")
+    public HelloResponseDto helloDto(@RequestParam("name") String name, @RequestParam("amount") int amount){
+
+        return new HelloResponseDto(name, amount);
     }
 }

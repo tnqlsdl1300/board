@@ -8,9 +8,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /*
     @RunWith(SpringRunner.class)
@@ -39,9 +39,48 @@ public class HelloControllerTest {
     public void hello가_리턴된다() throws Exception{
         String hello = "hello";
 
+        /*
+            - mvc.perform(get("/hello"))
+                - MockMvc를 통해 /hello 주소로 HTTP GET 요청
+                - 아마 테스트 코드 말고 기존 Controller의 /hello 를 실행하는 것 같음
+                - 체이닝 지원 ⇒ asfasf.asfa.asfaf ... 와 같은 형식
+            - .andExpect(status().isOk())
+                - mvc.perform 의 값을 검증
+                - status() ⇒ HTTP Header의 Status 값 검증 (200, 404, 500 등등)
+                - .isOk() ⇒ Status 값이 200인지 아닌지 검증
+            - .andExpect(content().string(hello));
+                - mvc.perform 의 값을 검증
+                - content().string(hello)) ⇒ 응답 본문의 내용을 검증
+                - 실제 Controller 에서 "hello"를 리턴하기 때문에 테스트코드에서 "hello"를 리턴하는지 확인.만약 값이 다를시 오류처리 ⇒ 실제 Controller와 test 코드의 return  값이 같아야 함
+         */
         mvc.perform(get("/hello"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(hello));
+    }
+
+    @Test
+    public void helloDto가_리턴된다() throws Exception{
+        String name = "test";
+        int amount = 1000;
+
+        /*
+        param()
+            - API 테스트할 때 사용될 요창 파라미터를 설정
+            - 값은 String 만 허용
+            - 숫자 / 날짜 등의 데이터도 등록할때는 문자열로 변경해야 함
+
+        jsonPath()
+            - JSON 응답값을 필드별로 검증할 수 있는 메서드
+            - $를 기준으로 필드명을 명시
+            - 여기서는 name과 amount를 명시하니 $.name, $.amount로 검증
+         */
+        mvc.perform(
+                get("/hello/dto")
+                        .param("name", name)
+                        .param("amount", String.valueOf(amount)))
+                            .andExpect(status().isOk())
+                            .andExpect(jsonPath("$.name", is(name)))
+                            .andExpect(jsonPath("$.amount", is(amount)));
     }
 
 }
