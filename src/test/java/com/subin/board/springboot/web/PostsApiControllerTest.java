@@ -94,10 +94,12 @@ public class PostsApiControllerTest {
         Long updateId = savePosts.getId();
         String expectedTitle = "title2";
         String expectedContent = "content2";
+        String expectedAuthor = "author2";
 
         PostsUpdateRequestDto requestDto = PostsUpdateRequestDto.builder()
                 .title(expectedTitle)
                 .content(expectedContent)
+                .author(expectedAuthor)
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
@@ -115,6 +117,7 @@ public class PostsApiControllerTest {
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
         assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
+        assertThat(all.get(0).getAuthor()).isEqualTo(expectedAuthor);
 
         // 게시글 삭제
         url = "http://localhost:" + port + "/api/v1/posts/" + updateId;

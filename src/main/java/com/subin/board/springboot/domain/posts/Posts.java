@@ -68,8 +68,9 @@ public class Posts extends BaseTimeEntity {
     }
 
     // 게시글 수정
-    public void update(String title, String content) {
+    public void update(String title, String content, String author) {
         this.title = title;
         this.content = content;
+        this.author = author;
     }
 }

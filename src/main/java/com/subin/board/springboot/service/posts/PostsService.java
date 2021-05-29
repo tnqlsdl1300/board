@@ -35,7 +35,7 @@ public class PostsService {
         Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
         // 2: 생성된 entity를 가지고 값을 변경 -> 따로 update 쿼리를 날리지 않아도 됨 -> 더티체킹
-        posts.update(requestDto.getTitle(), requestDto.getContent());
+        posts.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getAuthor());
 
         return id;
         // 3: 트랜잭션 처리가 끝나면서 변경된 entity가 DB에 반영
