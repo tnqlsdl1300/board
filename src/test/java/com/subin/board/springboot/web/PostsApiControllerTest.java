@@ -2,6 +2,7 @@ package com.subin.board.springboot.web;
 
 import com.subin.board.springboot.domain.posts.Posts;
 import com.subin.board.springboot.domain.posts.PostsRepository;
+import com.subin.board.springboot.web.dto.PostsResponseDto;
 import com.subin.board.springboot.web.dto.PostsSaveRequestDto;
 import com.subin.board.springboot.web.dto.PostsUpdateRequestDto;
 import org.junit.After;
@@ -49,6 +50,20 @@ public class PostsApiControllerTest {
     @After
     public void tearDown() throws Exception{
         postsRepository.deleteAll();
+    }
+
+    @Test
+    public void Posts_조회한다() throws  Exception{
+
+        Posts_등록된다();
+
+        String url = "http://localhost:" + port + "/api/v1/posts/{id}";
+
+        PostsResponseDto responseDto = restTemplate.getForObject(url, PostsResponseDto.class, 1);
+
+        assertThat(responseDto.getId()).isEqualTo(1);
+
+
     }
 
     @Test

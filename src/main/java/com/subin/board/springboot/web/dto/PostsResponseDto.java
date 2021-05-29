@@ -2,8 +2,10 @@ package com.subin.board.springboot.web.dto;
 
 import com.subin.board.springboot.domain.posts.Posts;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class PostsResponseDto {
 
     private long id;
