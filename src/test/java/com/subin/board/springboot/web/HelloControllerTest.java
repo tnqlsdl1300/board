@@ -1,4 +1,4 @@
-package com.subin.board.springboot;
+package com.subin.board.springboot.web;
 
 import com.subin.board.springboot.web.HelloController;
 import org.junit.Test;
