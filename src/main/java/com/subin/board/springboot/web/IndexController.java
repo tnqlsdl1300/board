@@ -3,6 +3,7 @@ package com.subin.board.springboot.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+// 페이지 이동을 위한 컨트롤러
 @Controller
 public class IndexController {
 
@@ -16,9 +17,17 @@ public class IndexController {
         - 머스테치 스타터 덕분에 컨트롤러에서 문자열을 반환할 때 앞의 경로와 뒤의 파일 확장자는 자동으로 지정
             - 앞: src/main/resources/templates, 뒤: .mustache
      */
+    
+    // 메인화면으로 이동
     @GetMapping("/")
     public String index(){
         return "index";
+    }
+
+    // 게시글 수정 화면으로 이동
+    @GetMapping("/posts/save")
+    public String postsSave(){
+        return "posts-save";
     }
 
 }
