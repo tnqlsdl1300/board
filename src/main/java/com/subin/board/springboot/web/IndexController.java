@@ -1,10 +1,12 @@
 package com.subin.board.springboot.web;
 
 import com.subin.board.springboot.service.posts.PostsService;
+import com.subin.board.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 // 페이지 이동을 위한 컨트롤러
 @RequiredArgsConstructor
@@ -33,10 +35,20 @@ public class IndexController {
         return "index";
     }
 
-    // 게시글 수정 화면으로 이동
+    // 게시글 등록 화면으로 이동
     @GetMapping("/posts/save")
     public String postsSave(){
         return "posts-save";
+    }
+
+    // 게시글 수정 화면으로 이동
+    @GetMapping("/posts/update/{id}")
+    public String postsUpdate(@PathVariable long id, Model model){
+
+        PostsResponseDto dto = postsService.findById(id);
+        model.addAttribute("post", dto);
+
+        return "posts-update";
     }
 
 }
