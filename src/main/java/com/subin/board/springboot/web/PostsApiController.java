@@ -13,6 +13,15 @@ public class PostsApiController {
 
     private final PostsService postsService;
 
+    /*
+    - Controller에서 view단과 통신할때 꼭 return 타입을 지정해줘야 한다. void X
+        - void로 할 시, 쿼리는 실행되지만 view단에서 실행했는지 모름
+        - 등록: id(PK)
+        - 수정: id(PK)
+        - 조회: Dto
+        - 삭제: id(PK)
+     */
+
     // 게시글 등록
     @PostMapping("/api/v1/posts")
     public long save(@RequestBody PostsSaveRequestDto requestDto){
@@ -33,8 +42,10 @@ public class PostsApiController {
 
     // 게시글 삭제
     @DeleteMapping("/api/v1/posts/{id}")
-    public void deleteById(@PathVariable long id){
+    public long deleteById(@PathVariable long id){
         postsService.deleteById(id);
+
+        return id;
     }
 
 }
