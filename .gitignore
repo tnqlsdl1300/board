@@ -216,3 +216,6 @@ gradle-app.setting
 **/build/
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,intellij,gradle,windows
+
+# oauth 파일 업로드 방지
+application-oauth.properties
