@@ -2,13 +2,16 @@ package com.subin.board.springboot.service.posts;
 
 import com.subin.board.springboot.domain.posts.Posts;
 import com.subin.board.springboot.domain.posts.PostsRepository;
+import com.subin.board.springboot.web.dto.PostsListResponseDto;
 import com.subin.board.springboot.web.dto.PostsResponseDto;
 import com.subin.board.springboot.web.dto.PostsSaveRequestDto;
 import com.subin.board.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -42,6 +45,7 @@ public class PostsService {
     }
 
     // 게시글 조회
+    @Transactional(readOnly = true)
     public PostsResponseDto findById(long id) {
         Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
@@ -53,5 +57,17 @@ public class PostsService {
     public void deleteById(long id) {
         Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id =" + id));
         postsRepository.delete(posts);
+    }
+
+    // 게시글 전체 조회
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc(){
+        
+        // findAllDesc(): postsRepository에 직접 작성한 쿼리
+        // 대충 List<Posts>로 넘어온 값을 List<PostsListResponseDto>로 변경시켜주는 코드
+        // .map(PostsListResponseDto::new)은 .map(Posts -> new PostsListResponseDto(Posts))와 같다
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
