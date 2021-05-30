@@ -1,5 +1,6 @@
 package com.subin.board.springboot.web;
 
+import com.subin.board.springboot.config.auth.dto.SessionUser;
 import com.subin.board.springboot.service.posts.PostsService;
 import com.subin.board.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import javax.servlet.http.HttpSession;
 
 // 페이지 이동을 위한 컨트롤러
 @RequiredArgsConstructor
@@ -25,12 +28,19 @@ public class IndexController {
      */
 
     private final PostsService postsService;
+    private final HttpSession httpSession;
     
     // 메인화면으로 이동
     @GetMapping("/")
     public String index(Model model){
 
         model.addAttribute("posts", postsService.findAllDesc());
+
+        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+
+        if (user != null){
+            model.addAttribute("personName", user.getName());
+        }
 
         return "index";
     }
