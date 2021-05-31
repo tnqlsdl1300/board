@@ -6,6 +6,16 @@
         <div class="row">
             <div class="col-md-6">
                 <a href="/posts/save" role="button" class="btn btn-primary"> 글 등록</a>
+                <!--
+                - View단의 로그인, 로그아웃 설정
+                    - /logout
+                        - 스프링 시큐리티에서 기본적으로 제공하는 로그아웃 URL
+                        - 즉, 개발자가 저 URL에 해당하는 컨트롤러를 만들 필요가 없음
+                        - SecurityConfig 클래스에서 해당 URL을 변경할 수 있음
+                    - /oauth2/authorization/google
+                        - 스프링 시큐리티에서 기본적으로 제공하는 로그인 URL
+                        - 로그아웃 URL과 마찬가지로 개발자가 별도의 컨트롤러를 생성할 필요 없음
+                -->
                 {{#personName}}
                     Logged in as: <span id="user">{{personName}}</span>
                     <a href="/logout" class="btn btn-info active" role="button">Logout</a>

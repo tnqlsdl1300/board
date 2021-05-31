@@ -7,6 +7,8 @@ import lombok.Getter;
 
 import java.util.Map;
 
+// OAuthAttributes는 Dto로 보면 됨
+
 @Getter
 public class OAuthAttributes {
 
@@ -25,6 +27,7 @@ public class OAuthAttributes {
         this.picture = picture;
     }
 
+    // of() → OAuth2User 에서 반환하는 사용자 정보는 Map 이기 때문에 값 하나하나를 변환해야 함
     public static OAuthAttributes of(String registrationId, String userNameAttributesName, Map<String, Object> attributes){
         return ofGoogle(userNameAttributesName, attributes);
     }
@@ -39,6 +42,12 @@ public class OAuthAttributes {
                 .build();
     }
 
+    /*
+    - toEntity()
+        - User 엔티티를 생성
+        - OAuthAttributes 에서 엔티티를 생성하는 시점은 처음 가입할 때
+        - 가입할 때의 기본 권한을 GUEST로 주기 위해서 role 빌더값에는 Role.GUEST를 사용
+     */
     public User toEntity(){
         return User.builder()
                 .name(name)
