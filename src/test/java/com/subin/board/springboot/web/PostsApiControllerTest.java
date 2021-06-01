@@ -7,21 +7,27 @@ import com.subin.board.springboot.web.dto.PostsResponseDto;
 import com.subin.board.springboot.web.dto.PostsSaveRequestDto;
 import com.subin.board.springboot.web.dto.PostsUpdateRequestDto;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /*
 - @SpringBootTest
@@ -48,12 +54,27 @@ public class PostsApiControllerTest {
     @Autowired
     private PostsRepository postsRepository;
 
+    @Autowired
+    private WebApplicationContext context;
+
+    private MockMvc mvc;
+
+    @Before
+    public void setup(){
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+    }
+
     @After
     public void tearDown() throws Exception{
         postsRepository.deleteAll();
     }
 
+    // 인증 x
     @Test
+    @WithMockUser(roles = "USER")
     public void Posts_조회한다() throws  Exception{
 
         // 테이블 생성 및 값 넣어주는 용
@@ -70,7 +91,7 @@ public class PostsApiControllerTest {
         // exchange() 사용
         // exchange(url, 메서드 종류(get,post,put,delete), 매개변수에 엔티티가 있는지..?, 리턴 타입)
         ResponseEntity<PostsResponseDto> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, PostsResponseDto.class);
-        
+
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         
         // JSON 변환(ResponseEntity의 내용물을 보기 위해 사용)
@@ -80,7 +101,14 @@ public class PostsApiControllerTest {
         System.out.println(">>>>>> " + jsonString);
     }
 
+    /*
+    @WithMockUser(roles = "USER") → 해당 테스트 코드에 임의의 사용자 인증 추가
+        - 인증된 모의(가짜) 사용자를 만들어서 사용
+        - roles에 권한을 추가할 수 있음
+        - 즉, 이 어노테이션으로 인해 ROLE_USER 권한을 가진 사용자가 API를 요청하는 것과 동일한 효과를 가지게 됨
+     */
     @Test
+    @WithMockUser(roles = "USER")
     public void Posts_등록된다() throws  Exception{
 
         // given
@@ -95,14 +123,13 @@ public class PostsApiControllerTest {
 
         String url = "http://localhost:" + port + "/api/v1/posts";
 
-        // when
-        // restTemplate.postForEntity(url, 메서드의 매개변수, 메서드의 리턴타입);
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
+        //when
+        mvc.perform(post(url)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
 
-        // then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
-
+        //then
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
@@ -110,6 +137,7 @@ public class PostsApiControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void Posts_수정된다() throws Exception{
 
         // 테이블 생성 및 게시글 한개 생성
@@ -134,22 +162,16 @@ public class PostsApiControllerTest {
         // HttpEntity<객체타입> requestEntity = new HttpEntity<>(객체);
         HttpEntity<PostsUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
 
-        // 게시글 수정
-        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long.class);
+        //when
+        mvc.perform(put(url)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
 
-        // then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
-
+        //then
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
         assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
-
-        // 게시글 삭제
-        url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
-
-        //restTemplate.delete(url);
-        restTemplate.exchange(url, HttpMethod.DELETE, responseEntity, void.class);
 
     }
 

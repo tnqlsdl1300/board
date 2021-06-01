@@ -14,7 +14,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
         
         * 주의: 반드시 프로젝트의 최상단에 위치해 있어야 함
 */
-@EnableJpaAuditing
+// 테스트코드를 위해 config/JpaConfig로 이동
+//@EnableJpaAuditing
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) {
