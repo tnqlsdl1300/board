@@ -1,5 +1,5 @@
 # Board
-_Spring Boot 및 AWS EC2 학습 프로젝트_
+_Spring Boot 및 AWS EC2 프로젝트_
 
 ## 기술스택
 
