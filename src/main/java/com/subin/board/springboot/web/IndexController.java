@@ -1,5 +1,6 @@
 package com.subin.board.springboot.web;
 
+import com.subin.board.springboot.config.auth.LoginUser;
 import com.subin.board.springboot.config.auth.dto.SessionUser;
 import com.subin.board.springboot.service.posts.PostsService;
 import com.subin.board.springboot.web.dto.PostsResponseDto;
@@ -32,11 +33,13 @@ public class IndexController {
     
     // 메인화면으로 이동
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, @LoginUser SessionUser user){
 
+        /*
+        - 기존에 SessionUser user = (SessionUser) httpSession.getAttribute("user")로 가져오던 세션 정보 값이 개선됨
+        - 이제는 어느 컨트롤러든지 @LoginUser를 매개변수로 받으면 세션 정보를 가져올 수 있게 됨
+         */
         model.addAttribute("posts", postsService.findAllDesc());
-
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
         if (user != null){
             model.addAttribute("personName", user.getName());

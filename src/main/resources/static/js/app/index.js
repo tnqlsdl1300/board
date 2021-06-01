@@ -12,6 +12,7 @@ var main = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
+
     },
     save : function () {
         var data = {
@@ -31,6 +32,9 @@ var main = {
             alert('글이 등록되었습니다.');
             window.location.href = '/';
         }).fail(function (error) {
+            if(error.readyState == 4){
+                 alert("권한이 없습니다.");
+             }
             alert(JSON.stringify(error));
         });
     },
