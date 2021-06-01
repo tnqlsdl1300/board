@@ -8,7 +8,6 @@ _Spring Boot 및 AWS EC2 프로젝트_
 - Java
 - Spring Boot
 - Spring Security
-- Apache Tomcat v8.5
 - MySql
 - H2
 - Spring Data JPA
