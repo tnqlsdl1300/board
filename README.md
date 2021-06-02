@@ -8,7 +8,7 @@ _Spring Boot 및 AWS EC2 프로젝트_
 - Java
 - Spring Boot
 - Spring Security
-- MySql
+- MariaDB
 - H2
 - Spring Data JPA
 
@@ -18,10 +18,12 @@ _Spring Boot 및 AWS EC2 프로젝트_
 - Javascript
 - JQuery
 - HTML 5 & CSS3
-- Bootstrap 3
+- Bootstrap 4
 
 > Devops
 
+- AWS EC2
+- AWS RDS
 - Gradle
 - Lombok
 - InteliJ
