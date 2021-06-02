@@ -73,7 +73,8 @@ public class PostsApiControllerTest {
     }
 
     // 인증 x
-    @Test
+
+    /*@Test
     @WithMockUser(roles = "USER")
     public void Posts_조회한다() throws  Exception{
 
@@ -82,24 +83,24 @@ public class PostsApiControllerTest {
 
         String url = "http://localhost:" + port + "/api/v1/posts/1";
 
-        /*
+        *//*
         - getForObject() 사용
         PostsResponseDto responseDto = restTemplate.getForObject(url, PostsResponseDto.class, 1);
         assertThat(responseDto.getId()).isEqualTo(1);
-        */
+        *//*
 
         // exchange() 사용
         // exchange(url, 메서드 종류(get,post,put,delete), 매개변수에 엔티티가 있는지..?, 리턴 타입)
         ResponseEntity<PostsResponseDto> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, PostsResponseDto.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        
+
         // JSON 변환(ResponseEntity의 내용물을 보기 위해 사용)
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(responseEntity);
 
         System.out.println(">>>>>> " + jsonString);
-    }
+    }*/
 
     /*
     @WithMockUser(roles = "USER") → 해당 테스트 코드에 임의의 사용자 인증 추가
