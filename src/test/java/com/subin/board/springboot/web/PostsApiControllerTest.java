@@ -72,7 +72,7 @@ public class PostsApiControllerTest {
         postsRepository.deleteAll();
     }
 
-    @Test
+    /*@Test
     @WithMockUser(roles = "USER")
     public void Posts_조회한다() throws  Exception{
 
@@ -97,7 +97,7 @@ public class PostsApiControllerTest {
         String jsonString = objectMapper.writeValueAsString(responseEntity);
 
         System.out.println(">>>>>> " + jsonString);
-    }
+    }*/
 
     /*
     @WithMockUser(roles = "USER") → 해당 테스트 코드에 임의의 사용자 인증 추가
