@@ -72,22 +72,19 @@ public class PostsApiControllerTest {
         postsRepository.deleteAll();
     }
 
-    // 인증 x
-
-    /*@Test
+    @Test
     @WithMockUser(roles = "USER")
     public void Posts_조회한다() throws  Exception{
 
         // 테이블 생성 및 값 넣어주는 용
+        // 등록하기는 USER 권한이 있어야 하지만 조회 메서드에 어노테이션으로 달아줘서 가능해짐
         Posts_등록된다();
-
         String url = "http://localhost:" + port + "/api/v1/posts/1";
 
-        *//*
-        - getForObject() 사용
+        // getForObject() 사용
         PostsResponseDto responseDto = restTemplate.getForObject(url, PostsResponseDto.class, 1);
-        assertThat(responseDto.getId()).isEqualTo(1);
-        *//*
+        assertThat(responseDto.getId()).isNotNull().isEqualTo(1);
+
 
         // exchange() 사용
         // exchange(url, 메서드 종류(get,post,put,delete), 매개변수에 엔티티가 있는지..?, 리턴 타입)
@@ -100,7 +97,7 @@ public class PostsApiControllerTest {
         String jsonString = objectMapper.writeValueAsString(responseEntity);
 
         System.out.println(">>>>>> " + jsonString);
-    }*/
+    }
 
     /*
     @WithMockUser(roles = "USER") → 해당 테스트 코드에 임의의 사용자 인증 추가

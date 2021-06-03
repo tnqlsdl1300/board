@@ -2,6 +2,7 @@ package com.subin.board.springboot.config.auth;
 
 import com.subin.board.springboot.domain.user.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -21,6 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests()
                     .antMatchers("/", "/css/**","/images/**", "/js/**", "/h2-console/**").permitAll()
+                    // 조회는 권한에 영향을 받지않게 설정
+                    .antMatchers(HttpMethod.GET, "/api/v1/posts/{id}").permitAll()
                     .antMatchers("/api/v1/**").hasRole(Role.USER.name())
                     .anyRequest().authenticated()
                 .and()
