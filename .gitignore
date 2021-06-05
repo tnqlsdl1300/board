@@ -219,3 +219,6 @@ gradle-app.setting
 
 # oauth 파일 업로드 방지
 application-oauth.properties
+
+# DB 데이터 업로드 방지
+application-real-db.properties
