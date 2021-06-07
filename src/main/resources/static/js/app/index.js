@@ -32,9 +32,9 @@ var main = {
             alert('글이 등록되었습니다.');
             window.location.href = '/';
         }).fail(function (error) {
-            if(error.readyState == 4){
+            if(error.readyState == 4 || error.readyState == 0){
                  alert("권한이 없습니다.");
-             }
+            }
             alert(JSON.stringify(error));
         });
     },
@@ -56,7 +56,9 @@ var main = {
             alert('글이 수정되었습니다.');
             window.location.href = '/';
         }).fail(function (error) {
-            alert(JSON.stringify(error));
+            if(error.readyState == 4 || error.readyState == 0){
+                 alert("권한이 없습니다.");
+            }
         });
     },
     delete : function(){
@@ -71,7 +73,9 @@ var main = {
             alert('글이 삭제되었습니다.');
             window.location.href = '/';
         }).fail(function (error) {
-            alert(JSON.stringify(error));
+            if(error.readyState == 4 || error.readyState == 0){
+                 alert("권한이 없습니다.");
+            }
         });
     }
 
