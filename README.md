@@ -1,5 +1,5 @@
-# Board
-_Spring Boot 및 AWS EC2 프로젝트_
+# boot-board
+_Spring Boot 및 AWS 프로젝트_
 
 ## 기술스택
 
@@ -9,7 +9,6 @@ _Spring Boot 및 AWS EC2 프로젝트_
 - Spring Boot
 - Spring Security
 - MariaDB
-- H2
 - Spring Data JPA
 
 > Front-end
