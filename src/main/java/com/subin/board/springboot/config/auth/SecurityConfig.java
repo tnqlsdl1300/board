@@ -22,8 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests()
                     .antMatchers("/", "/css/**","/images/**", "/js/**", "/h2-console/**").permitAll()
-                    // 조회는 권한에 영향을 받지않게 설정
-                    .antMatchers(HttpMethod.GET, "/api/v1/posts/{id}").permitAll()
+                    // 게시글 조회(수정 페이지 진입)는 권한에 영향을 받지않게 설정
+                    .antMatchers(HttpMethod.GET, "/posts/update/{id}").permitAll()
                     .antMatchers("/api/v1/**").hasRole(Role.USER.name())
                     .anyRequest().authenticated()
                 .and()
