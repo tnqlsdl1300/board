@@ -25,6 +25,6 @@ _Spring Boot 및 AWS 프로젝트_
 - AWS RDS
 - Gradle
 - Lombok
-- InteliJ
+- IntelliJ
 - Git
 - Github
