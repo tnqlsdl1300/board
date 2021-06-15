@@ -2,6 +2,7 @@ package com.subin.board.springboot.web;
 
 import com.subin.board.springboot.config.auth.LoginUser;
 import com.subin.board.springboot.config.auth.dto.SessionUser;
+import com.subin.board.springboot.service.pagingPosts.PagingPostsService;
 import com.subin.board.springboot.service.posts.PostsService;
 import com.subin.board.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class IndexController {
      */
 
     private final PostsService postsService;
+    private final PagingPostsService pagingPostsService;
     private final HttpSession httpSession;
     
     // 메인화면으로 이동
@@ -46,6 +48,14 @@ public class IndexController {
         }
 
         return "index";
+    }
+
+    // 페이징 게시판으로 이동
+    @GetMapping("/paging")
+    public String paging(Model model, @LoginUser SessionUser user) {
+        model.addAttribute("pagingPosts", pagingPostsService.findAll());
+
+        return "paging";
     }
 
     // 게시글 등록 화면으로 이동
