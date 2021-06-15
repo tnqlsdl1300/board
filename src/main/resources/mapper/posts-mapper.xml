@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PostsMapper">
+    <select id="getPostsList" resultType="com.subin.board.springboot.web.dto.PostsListResponseDto">
+        <!--
+            1. mariaDB는 대소문자 구분
+            2. Dto의 변수명과 DB의 테이블 명이 다르기 때문에 별칭으로 동일하게 해서 보내줌(created_date, modified_date)
+         -->
+        SELECT id, title, author, created_date as createdDate, modified_date as modifiedDate
+        FROM posts
+        order by id desc
+    </select>
+</mapper>

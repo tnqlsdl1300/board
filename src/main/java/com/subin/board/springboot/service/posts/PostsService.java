@@ -2,6 +2,7 @@ package com.subin.board.springboot.service.posts;
 
 import com.subin.board.springboot.domain.posts.Posts;
 import com.subin.board.springboot.domain.posts.PostsRepository;
+import com.subin.board.springboot.domain.posts.dao.PostsDao;
 import com.subin.board.springboot.web.dto.PostsListResponseDto;
 import com.subin.board.springboot.web.dto.PostsResponseDto;
 import com.subin.board.springboot.web.dto.PostsSaveRequestDto;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class PostsService {
 
     private final PostsRepository postsRepository;
+    private final PostsDao postsDao;
 
     // 게시글 생성
     @Transactional
@@ -69,5 +71,9 @@ public class PostsService {
         return postsRepository.findAllDesc().stream()
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
+
+        // mybatis로 불러오기
+        /*List<PostsListResponseDto> list = postsDao.getPostsList();
+        return list;*/
     }
 }
