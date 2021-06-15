@@ -73,7 +73,6 @@ public class PostsService {
                 .collect(Collectors.toList());
 
         // mybatis로 불러오기
-        /*List<PostsListResponseDto> list = postsDao.getPostsList();
-        return list;*/
+        //return postsDao.getPostsList();
     }
 }
