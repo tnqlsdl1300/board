@@ -45,4 +45,12 @@ public class PageMaker {
         next = endPage * cri.getPerPageNum() < totalCount ? true : false;
     }
 
+    public boolean getPrev(){
+        return prev;
+    }
+
+    public boolean getNext(){
+        return next;
+    }
+
 }
