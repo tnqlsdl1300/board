@@ -64,11 +64,8 @@ public class IndexController {
 
         List<PagingPostsDto> list =  pagingPostsService.findAll(cri);
 
-        for (PagingPostsDto li : list) {
-            System.out.println("title: " + li.getTitle());
-        }
-
-        //model.addAttribute("pagingPosts", );
+        model.addAttribute("list", list);
+        model.addAttribute("pageMaker", pageMaker);
 
         return "paging";
     }
