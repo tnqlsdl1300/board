@@ -17,7 +17,7 @@ public class Criteria {
 
     public Criteria(){
         this.page = 1;
-        this.perPageNum = 10;
+        this.perPageNum = 5;    // 한 페이지당 보여줄 게시글의 개수를 5개로 고정
     }
 
     // 페이지가 음수값이 되지 않게 설정. 음수가 되면 1페이지를 나타냄

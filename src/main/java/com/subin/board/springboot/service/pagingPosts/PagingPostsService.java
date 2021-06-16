@@ -14,8 +14,14 @@ public class PagingPostsService {
 
     private final InterPagingPostsDao pagingPostsDao;
 
+    // 페이징 게시글 가져오기
     public List<PagingPostsDto> findAll(Criteria cri){
         return pagingPostsDao.findAll(cri);
+    }
+
+    // 게시글 총 개수 구하기
+    public int countTotalPosts(){
+        return pagingPostsDao.countTotalPosts();
     }
 
 }

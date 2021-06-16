@@ -60,9 +60,13 @@ public class IndexController {
 
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCri(cri);
-        pageMaker.setTotalCount(6);
+        pageMaker.setTotalCount(pagingPostsService.countTotalPosts());
 
         List<PagingPostsDto> list =  pagingPostsService.findAll(cri);
+
+        for (PagingPostsDto li : list) {
+            System.out.println("title: " + li.getTitle());
+        }
 
         //model.addAttribute("pagingPosts", );
 

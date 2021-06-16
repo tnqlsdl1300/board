@@ -15,9 +15,16 @@ public class PagingPostsDao implements InterPagingPostsDao {
 
     private final SqlSessionTemplate sqlSession;
 
+    // 페이징 게시글 가져오기
     @Override
     public List<PagingPostsDto> findAll(Criteria cri) {
         return sqlSession.selectList("getPagingPosts", cri);
+    }
+
+    // 게시글 총 개수 구하기
+    @Override
+    public int countTotalPosts() {
+        return sqlSession.selectOne("countTotalPosts");
     }
 
 }
