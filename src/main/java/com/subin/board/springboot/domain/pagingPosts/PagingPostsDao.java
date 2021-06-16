@@ -1,5 +1,6 @@
 package com.subin.board.springboot.domain.pagingPosts;
 
+import com.subin.board.springboot.utils.Criteria;
 import com.subin.board.springboot.web.dto.PagingPostsDto;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,8 @@ public class PagingPostsDao implements InterPagingPostsDao {
     private final SqlSessionTemplate sqlSession;
 
     @Override
-    public List<PagingPostsDto> findAll() {
-        return sqlSession.selectList("getPagingPosts");
+    public List<PagingPostsDto> findAll(Criteria cri) {
+        return sqlSession.selectList("getPagingPosts", cri);
     }
 
 }

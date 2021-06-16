@@ -4,6 +4,9 @@ import com.subin.board.springboot.config.auth.LoginUser;
 import com.subin.board.springboot.config.auth.dto.SessionUser;
 import com.subin.board.springboot.service.pagingPosts.PagingPostsService;
 import com.subin.board.springboot.service.posts.PostsService;
+import com.subin.board.springboot.utils.Criteria;
+import com.subin.board.springboot.utils.PageMaker;
+import com.subin.board.springboot.web.dto.PagingPostsDto;
 import com.subin.board.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 // 페이지 이동을 위한 컨트롤러
 @RequiredArgsConstructor
@@ -52,8 +56,15 @@ public class IndexController {
 
     // 페이징 게시판으로 이동
     @GetMapping("/paging")
-    public String paging(Model model, @LoginUser SessionUser user) {
-        model.addAttribute("pagingPosts", pagingPostsService.findAll());
+    public String paging(Model model, @LoginUser SessionUser user, Criteria cri) {
+
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setCri(cri);
+        pageMaker.setTotalCount(6);
+
+        List<PagingPostsDto> list =  pagingPostsService.findAll(cri);
+
+        //model.addAttribute("pagingPosts", );
 
         return "paging";
     }
