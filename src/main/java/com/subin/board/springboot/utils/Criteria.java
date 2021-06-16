@@ -17,7 +17,7 @@ public class Criteria {
 
     public Criteria(){
         this.page = 1;
-        this.perPageNum = 5;
+        this.perPageNum = 10;
     }
 
     // 페이지가 음수값이 되지 않게 설정. 음수가 되면 1페이지를 나타냄
