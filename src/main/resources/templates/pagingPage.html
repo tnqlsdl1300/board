@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <h1>페이징 게시판</h1>
+    <div class="col-md-12">
+        <!-- 목록 출력 영역 -->
+        <table class="table table-horizontal table-bordered">
+            <thead class="thead-strong">
+            <tr>
+                <th>게시글번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+                <tr th:each="list : ${list}">
+                    <td th:text="${list.id}"></td>
+                    <td th:text="${list.title}"></td>
+                    <td th:text="${list.author}"></td>
+                    <td th:text="${list.createdDate}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <ul>
+            <li th:if="${pageMaker.prev}">
+                <a th:href="@{/pagingPage(page=${pageMaker.startPage-1})}">prev</a>
+            </li>
+            <li th:each="pageNum : ${#numbers.sequence({pageMaker.startPage},{pageMaker.endPage})}">
+                <a th:text="${pageNum}" th:href="@{/pagingPage(page=${pageNum})}"></a>
+            </li>
+            <li th:if="${pageMaker.next}">
+                <a th:href="@{/pagingPage(page=${pageMaker.endPage+1})}">next</a>
+            </li>
+        </ul>
+    </div>
+<!-- /container -->
+</body>
+</html>
