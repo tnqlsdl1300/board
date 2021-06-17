@@ -1,44 +1,44 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/header :: header"></head>
 <body>
-<div class="container">
-    <h1>페이징 게시판</h1>
-    <div class="col-md-12">
-        <!-- 목록 출력 영역 -->
-        <table class="table table-horizontal table-bordered">
-            <thead class="thead-strong">
-            <tr>
-                <th>게시글번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-            </tr>
-            </thead>
-            <tbody id="tbody">
-                <tr th:each="list : ${list}">
-                    <td th:text="${list.id}"></td>
-                    <td th:text="${list.title}"></td>
-                    <td th:text="${list.author}"></td>
-                    <td th:text="${list.createdDate}"></td>
-                </tr>
-            </tbody>
-        </table>
-        <ul style="list-style:none; padding-left: 0px ">
-            <!-- 이전 버튼(if문 사용) -->
-            <li th:if="${pageMaker.prev}" style="float: left; padding-right: 5px;">
-                <!-- 페이지 이동(href 사용 -> 파라미터를 사용해 이동) -->
-                <a th:href="@{/paging(page=${pageMaker.startPage-1})}">prev</a>
-            </li>
-            <!-- 페이지 버튼(for문 사용 -> 시작,끝 지정) -->
-            <li th:each="pageNum : ${#numbers.sequence({pageMaker.startPage},{pageMaker.endPage})}" style="float: left; padding-right: 5px;">
-                <a th:text="${pageNum}" th:href="@{/paging(page=${pageNum})}"></a>
-            </li>
-            <!-- 다음 버튼(if문 사용) -->
-            <li th:if="${pageMaker.next}" style="float: left;">
-                <a th:href="@{/paging(page=${pageMaker.endPage+1})}">next</a>
-            </li>
-        </ul>
-    </div>
-<!-- /container -->
+<h1>페이징 게시판</h1>
+<div class="col-md-12">
+    <!-- 목록 출력 영역 -->
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-strong">
+        <tr>
+            <th>게시글번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        <tr th:each="list : ${list}">
+            <td th:text="${list.id}"></td>
+            <td th:text="${list.title}"></td>
+            <td th:text="${list.author}"></td>
+            <td th:text="${list.createdDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <ul style="list-style:none; padding-left: 0px ">
+        <!-- 이전 버튼(if문 사용) -->
+        <li th:if="${pageMaker.prev}" style="float: left; padding-right: 5px;">
+            <!-- 페이지 이동(href 사용 -> 파라미터를 사용해 이동) -->
+            <a th:href="@{/paging(page=${pageMaker.startPage-1})}">prev</a>
+        </li>
+        <!-- 페이지 버튼(for문 사용 -> 시작,끝 지정) -->
+        <li th:each="pageNum : ${#numbers.sequence({pageMaker.startPage},{pageMaker.endPage})}" style="float: left; padding-right: 5px;">
+            <a th:text="${pageNum}" th:href="@{/paging(page=${pageNum})}"></a>
+        </li>
+        <!-- 다음 버튼(if문 사용) -->
+        <li th:if="${pageMaker.next}" style="float: left;">
+            <a th:href="@{/paging(page=${pageMaker.endPage+1})}">next</a>
+        </li>
+    </ul>
+</div>
 </body>
+<footer th:replace="layout/footer :: footer"></footer>
 </html>
