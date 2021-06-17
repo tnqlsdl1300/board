@@ -70,22 +70,6 @@ public class IndexController {
         return "paging";
     }
 
-    // 페이징 게시판1로 이동
-    @GetMapping("/pagingPage")
-    public String pagingPage(Model model, @LoginUser SessionUser user, Criteria cri) {
-
-        PageMaker pageMaker = new PageMaker();
-        pageMaker.setCri(cri);
-        pageMaker.setTotalCount(pagingPostsService.countTotalPosts());
-
-        List<PagingPostsDto> list =  pagingPostsService.findAll(cri);
-
-        model.addAttribute("list", list);
-        model.addAttribute("pageMaker", pageMaker);
-
-        return "pagingPage";
-    }
-
     // 게시글 등록 화면으로 이동
     @GetMapping("/posts/save")
     public String postsSave(){
