@@ -54,6 +54,16 @@
         </tr>
       </tbody>
     </table>
+    <ul style="list-style:none; padding-left: 0px ">
+      <!-- 이전 버튼 -->
+      <li th:if="${hasPrevious}" style="float: left; padding-right: 5px;">
+        <a th:href="@{/index1(page=${prev})}">prev</a>
+      </li>
+      <!-- 다음 버튼 -->
+      <li th:if="${nextCheck}" style="float: left;">
+        <a th:href="@{/index1(page=${next})}">next</a>
+      </li>
+    </ul>
   </div>
   <a href="/paging" role="button" class="btn btn-primary">페이징 게시판</a>
 </body>

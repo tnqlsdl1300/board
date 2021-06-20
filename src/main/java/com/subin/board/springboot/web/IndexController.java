@@ -40,7 +40,7 @@ public class IndexController {
     private final PagingPostsService pagingPostsService;
     private final HttpSession httpSession;
     
-    // 메인화면으로 이동
+    // (JPA 페이징 없는) 메인화면으로 이동
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user){
 
@@ -67,6 +67,12 @@ public class IndexController {
         - 이제는 어느 컨트롤러든지 @LoginUser를 매개변수로 받으면 세션 정보를 가져올 수 있게 됨
          */
         model.addAttribute("posts", postsService.findAll(pageable));
+        model.addAttribute("prev", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        // 이전 페이지가 있는지 판별
+        model.addAttribute("hasPrevious", pageable.hasPrevious());
+        // JPA 페이징의 다음(next) 버튼이 끝인지 판별
+        model.addAttribute("nextCheck", postsService.nextCheck(pageable));
 
         if (user != null){
             model.addAttribute("personName", user.getName());
