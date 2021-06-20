@@ -2,13 +2,16 @@ package com.subin.board.springboot.web;
 
 import com.subin.board.springboot.config.auth.LoginUser;
 import com.subin.board.springboot.config.auth.dto.SessionUser;
+import com.subin.board.springboot.domain.posts.Posts;
 import com.subin.board.springboot.service.pagingPosts.PagingPostsService;
 import com.subin.board.springboot.service.posts.PostsService;
 import com.subin.board.springboot.utils.Criteria;
+import com.subin.board.springboot.utils.JpaPageMaker;
 import com.subin.board.springboot.utils.PageMaker;
 import com.subin.board.springboot.web.dto.PagingPostsDto;
 import com.subin.board.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -66,13 +69,16 @@ public class IndexController {
         - 기존에 SessionUser user = (SessionUser) httpSession.getAttribute("user")로 가져오던 세션 정보 값이 개선됨
         - 이제는 어느 컨트롤러든지 @LoginUser를 매개변수로 받으면 세션 정보를 가져올 수 있게 됨
          */
-        model.addAttribute("posts", postsService.findAll(pageable));
-        model.addAttribute("prev", pageable.previousOrFirst().getPageNumber());
-        model.addAttribute("next", pageable.next().getPageNumber());
-        // 이전 페이지가 있는지 판별
-        model.addAttribute("hasPrevious", pageable.hasPrevious());
-        // JPA 페이징의 다음(next) 버튼이 끝인지 판별
-        model.addAttribute("nextCheck", postsService.nextCheck(pageable));
+        
+        // 페이징 처리한 게시글 리스트
+        Page<Posts> list = postsService.findAll(pageable);
+
+        // 페이지 버튼 생성을 위한 객체
+        JpaPageMaker pageMaker = new JpaPageMaker(pageable.getPageSize(), pageable.getPageNumber()+1);
+        pageMaker.setTotalCount((int) list.getTotalElements());
+
+        model.addAttribute("posts", list);
+        model.addAttribute("pageMaker", pageMaker);
 
         if (user != null){
             model.addAttribute("personName", user.getName());
