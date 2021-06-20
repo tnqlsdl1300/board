@@ -9,6 +9,9 @@ import com.subin.board.springboot.utils.PageMaker;
 import com.subin.board.springboot.web.dto.PagingPostsDto;
 import com.subin.board.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +55,24 @@ public class IndexController {
         }
 
         return "index";
+    }
+
+    // 메인화면1으로 이동
+    @GetMapping("/index1")
+    public String index1(Model model, @LoginUser SessionUser user
+            , @PageableDefault(size=5, sort="id", direction = Sort.Direction.DESC)Pageable pageable){
+
+        /*
+        - 기존에 SessionUser user = (SessionUser) httpSession.getAttribute("user")로 가져오던 세션 정보 값이 개선됨
+        - 이제는 어느 컨트롤러든지 @LoginUser를 매개변수로 받으면 세션 정보를 가져올 수 있게 됨
+         */
+        model.addAttribute("posts", postsService.findAll(pageable));
+
+        if (user != null){
+            model.addAttribute("personName", user.getName());
+        }
+
+        return "index1";
     }
 
     // 페이징 게시판으로 이동

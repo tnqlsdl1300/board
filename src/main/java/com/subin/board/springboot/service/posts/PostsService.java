@@ -8,6 +8,8 @@ import com.subin.board.springboot.web.dto.PostsResponseDto;
 import com.subin.board.springboot.web.dto.PostsSaveRequestDto;
 import com.subin.board.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,5 +76,10 @@ public class PostsService {
 
         // mybatis로 불러오기
         //return postsDao.getPostsList();
+    }
+
+    // 메인 게시판 페이징 조회
+    public Page<Posts> findAll(Pageable pageable) {
+        return postsRepository.findAll(pageable);
     }
 }
