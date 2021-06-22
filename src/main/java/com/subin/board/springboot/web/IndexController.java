@@ -66,7 +66,7 @@ public class IndexController {
             , @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable){
 
         Page<Posts> list = postsService.findAll(pageable);
-        System.out.println(">>>> " + pageable.previousOrFirst().getPageNumber());
+
         model.addAttribute("posts", list);                                      // 페이징 처리된 게시글 목록
         model.addAttribute("prev", pageable.previousOrFirst().getPageNumber()); // 이전 페이지 번호
         model.addAttribute("next", pageable.next().getPageNumber());            // 다음 페이지 번호

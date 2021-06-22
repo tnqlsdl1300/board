@@ -24,7 +24,8 @@
         </tbody>
     </table>
     <ul style="list-style:none; padding-left: 0px ">
-        <li style="float: left;">
+        <!-- 처음 페이지가 아닐때만 보이게 -->
+        <li th:if="${pageMaker.cri.page != 1}" style="float: left;">
             <a th:href="@{/paging(page=1)}">[처음]</a>
         </li>
         <!-- 이전 버튼(if문 사용) -->
@@ -40,7 +41,8 @@
         <li th:if="${pageMaker.next}" style="float: left;">
             <a th:href="@{/paging(page=${pageMaker.endPage+1})}">[다음]</a>
         </li>
-        <li style="float: left;">
+        <!-- 마지막 페이지가 아닐때만 보이게 -->
+        <li th:if="${pageMaker.cri.page} != ${pageMaker.tempEndPage}" style="float: left;">
             <a th:href="@{/paging(page=${pageMaker.tempEndPage})}">[끝]</a>
         </li>
     </ul>
