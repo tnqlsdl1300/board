@@ -43,15 +43,35 @@ public class IndexController {
     private final PagingPostsService pagingPostsService;
     private final HttpSession httpSession;
     
-    // (JPA 페이징 없는) 메인화면으로 이동
+    /*// (JPA 페이징 없는) 메인화면으로 이동
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user){
 
-        /*
+        *//*
         - 기존에 SessionUser user = (SessionUser) httpSession.getAttribute("user")로 가져오던 세션 정보 값이 개선됨
         - 이제는 어느 컨트롤러든지 @LoginUser를 매개변수로 받으면 세션 정보를 가져올 수 있게 됨
-         */
+         *//*
         model.addAttribute("posts", postsService.findAllDesc());
+
+        if (user != null){
+            model.addAttribute("personName", user.getName());
+        }
+
+        return "index";
+    }*/
+
+    // (JPA 페이징 있는) 메인화면으로 이동
+    @GetMapping("/")
+    public String index(Model model, @LoginUser SessionUser user
+            , @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable){
+
+        Page<Posts> list = postsService.findAll(pageable);
+        System.out.println(">>>> " + pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("posts", list);                                      // 페이징 처리된 게시글 목록
+        model.addAttribute("prev", pageable.previousOrFirst().getPageNumber()); // 이전 페이지 번호
+        model.addAttribute("next", pageable.next().getPageNumber());            // 다음 페이지 번호
+        model.addAttribute("hasPrev", list.hasPrevious());                      // 이전 페이지에 게시글이 존재하는지 체크
+        model.addAttribute("hasNext", list.hasNext());                          // 다음 페이지에 게시글이 존재하는지 체크
 
         if (user != null){
             model.addAttribute("personName", user.getName());

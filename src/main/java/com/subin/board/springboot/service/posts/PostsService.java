@@ -81,11 +81,4 @@ public class PostsService {
         return postsRepository.findAll(pageable);
     }
 
-    // JPA 페이징의 다음(next) 버튼이 끝인지 판별
-    @Transactional(readOnly = true)
-    public boolean nextCheck(Pageable pageable) {
-        // 리스트를 받는 변수의 속성이 Page 일시 findAll()에 매개변수로 pageable이 꼭 들어가야 함
-        Page<Posts> list = postsRepository.findAll(pageable);
-        return list.hasNext();
-    }
 }
