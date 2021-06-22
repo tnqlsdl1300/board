@@ -13,6 +13,7 @@ public class PageMaker {
     private int totalCount;         // 총 게시글 수
     private int startPage;          // 화면에 보여질 첫번째 페이지 번호, 시작 페이지 번호
     private int endPage;            // 화면에 보여질 마지막 페이지 번호, 끝 페이지 번호
+    private int tempEndPage;        // 맨끝 페이지 번호
     private boolean prev;           // 이전 버튼 생성 여부
     private boolean next;           // 다음 버튼 생성 여부
     private int displayPageNum = 5; // 화면 하단에 보여지는 페이지 버튼의 수
@@ -34,7 +35,7 @@ public class PageMaker {
         if(startPage <= 0) startPage = 1;
 
         // 마지막 페이지 번호 = 총 게시글 수 / 한 페이지당 보여줄 게시글의 갯수
-        int tempEndPage = (int) (Math.ceil(totalCount / (double) cri.getPerPageNum()));
+        tempEndPage = (int) (Math.ceil(totalCount / (double) cri.getPerPageNum()));
         if (endPage > tempEndPage) {
             endPage = tempEndPage;
         }

@@ -24,10 +24,13 @@
         </tbody>
     </table>
     <ul style="list-style:none; padding-left: 0px ">
+        <li style="float: left;">
+            <a th:href="@{/paging(page=1)}">[처음]</a>
+        </li>
         <!-- 이전 버튼(if문 사용) -->
         <li th:if="${pageMaker.prev}" style="float: left; padding-right: 5px;">
             <!-- 페이지 이동(href 사용 -> 파라미터를 사용해 이동) -->
-            <a th:href="@{/paging(page=${pageMaker.startPage-1})}">prev</a>
+            <a th:href="@{/paging(page=${pageMaker.startPage-1})}">[이전]</a>
         </li>
         <!-- 페이지 버튼(for문 사용 -> 시작,끝 지정) -->
         <li th:each="pageNum : ${#numbers.sequence({pageMaker.startPage},{pageMaker.endPage})}" style="float: left; padding-right: 5px;">
@@ -35,7 +38,10 @@
         </li>
         <!-- 다음 버튼(if문 사용) -->
         <li th:if="${pageMaker.next}" style="float: left;">
-            <a th:href="@{/paging(page=${pageMaker.endPage+1})}">next</a>
+            <a th:href="@{/paging(page=${pageMaker.endPage+1})}">[다음]</a>
+        </li>
+        <li style="float: left;">
+            <a th:href="@{/paging(page=${pageMaker.tempEndPage})}">[끝]</a>
         </li>
     </ul>
 </div>
