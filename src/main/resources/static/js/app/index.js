@@ -41,7 +41,8 @@ var main = {
     update : function(){
         var data = {
             title: $('#title').val(),
-            content: $('#content').val()
+            content: $('#content').val(),
+            author: $('#author').val()
         };
 
         var id = $('#id').val();
@@ -52,9 +53,15 @@ var main = {
             dataType: 'json',
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
-        }).done(function() {
-            alert('글이 수정되었습니다.');
-            window.location.href = '/';
+        }).done(function(json) {
+            if(json == -999){
+                // 게시글의 작성자가 아닐시(실패)
+                alert("작성자가 아닙니다.");
+            }else{
+                // 게시글의 작성자 일시(성공)
+                window.location.href = '/';
+                alert('글이 수정되었습니다.');
+            }
         }).fail(function (error) {
             if(error.readyState == 4 || error.readyState == 0){
                  alert("권한이 없습니다.");

@@ -1,5 +1,7 @@
 package com.subin.board.springboot.web;
 
+import com.subin.board.springboot.config.auth.LoginUser;
+import com.subin.board.springboot.config.auth.dto.SessionUser;
 import com.subin.board.springboot.service.posts.PostsService;
 import com.subin.board.springboot.web.dto.PostsResponseDto;
 import com.subin.board.springboot.web.dto.PostsSaveRequestDto;
@@ -30,8 +32,14 @@ public class PostsApiController {
 
     // 게시글 수정
     @PutMapping("/api/v1/posts/{id}")
-    public long update(@PathVariable long id, @RequestBody PostsUpdateRequestDto requestDto){
-        return postsService.update(id, requestDto);
+    public long update(@PathVariable long id, @RequestBody PostsUpdateRequestDto requestDto, @LoginUser SessionUser user){
+        // 작성자와 로그인한 회원의 이름이 같은지 확인
+        if (user.getName().equals(requestDto.getAuthor())){
+            return postsService.update(id, requestDto);
+        }else{
+            return -999;
+        }
+
     }
     
     // 게시글 조회
